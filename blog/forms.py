@@ -1,33 +1,33 @@
 from django import forms
 from .models import Comment, Post
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
 
 
 class PostsForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title',
-                  'text',
-                  'pub_date',
-                  'location',
-                  'category',
-                  'image',
-                  'is_published')
+        fields = ('title', 'text', 'category', 'location', 'image',
+                  'pub_date', 'is_published')
         widgets = {
-            'pub_date': forms.DateTimeInput(attrs={'type': 'datetime-local'})
+            'pub_date': forms.DateTimeInput(
+                attrs={'type': 'datetime-local'}
+            ),
+            'text': forms.Textarea(attrs={'rows': 10}),
         }
 
 
 class CommentsForm(forms.ModelForm):
-
     class Meta:
         model = Comment
         fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 3}),
+        }
 
 
-class ProfileForm(forms.ModelForm):
+class CommentEditForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'email')
+        model = Comment
+        fields = ('text',)
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 3}),
+        }

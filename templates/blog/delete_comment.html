@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% block title %}Удаление комментария{% endblock %}
+{% block content %}
+  <div class="col d-flex justify-content-center">
+    <div class="card" style="width: 40rem;">
+      <div class="card-header">
+        Удаление комментария
+      </div>
+      <div class="card-body">
+        <p>Вы уверены, что хотите удалить этот комментарий?</p>
+        <div class="border p-3 mb-3">
+          <p><strong>{{ comment.author.username }}</strong> ({{ comment.created_at|date:"d E Y, H:i" }}):</p>
+          <p>{{ comment.text|linebreaksbr }}</p>
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          {% bootstrap_button button_type="submit" content="Отправить" button_class="btn-primary" %}
+          <a href="{% url 'blog:post_detail' post.id %}" class="btn btn-secondary">Отмена</a>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
